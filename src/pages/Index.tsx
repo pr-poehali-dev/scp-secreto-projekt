@@ -1,58 +1,15 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Icon from '@/components/ui/icon';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { scpObjects } from '@/data/scpData';
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState('objects');
-
-  const scpObjects = [
-    {
-      id: 'SCP-002',
-      class: 'Euclid',
-      title: 'The "Living" Room',
-      description: 'Помещение с аномальными свойствами поглощения органической материи',
-      threat: 'medium'
-    },
-    {
-      id: 'SCP-087',
-      class: 'Euclid',
-      title: 'The Stairwell',
-      description: 'Бесконечная лестница, ведущая вниз. Источник неизвестного звука',
-      threat: 'medium'
-    },
-    {
-      id: 'SCP-173',
-      class: 'Euclid',
-      title: 'The Sculpture',
-      description: 'Скульптура из арматуры и бетона. Передвигается только вне поля зрения',
-      threat: 'high'
-    },
-    {
-      id: 'SCP-682',
-      class: 'Keter',
-      title: 'Hard-to-Destroy Reptile',
-      description: 'Крайне враждебная рептилия с регенеративными способностями',
-      threat: 'critical'
-    },
-    {
-      id: 'SCP-999',
-      class: 'Safe',
-      title: 'The Tickle Monster',
-      description: 'Дружелюбная оранжевая масса, вызывающая положительные эмоции',
-      threat: 'low'
-    },
-    {
-      id: 'SCP-096',
-      class: 'Euclid',
-      title: 'The "Shy Guy"',
-      description: 'Гуманоид, впадающий в ярость при взгляде на его лицо',
-      threat: 'high'
-    }
-  ];
 
   const factions = [
     {
@@ -220,41 +177,42 @@ const Index = () => {
           <TabsContent value="objects" className="space-y-4 animate-slide-up">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {scpObjects.map((obj, index) => (
-                <Card 
-                  key={obj.id} 
-                  className="bg-card border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 cursor-pointer"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <CardHeader>
-                    <div className="flex items-start justify-between mb-2">
-                      <CardTitle className="text-lg font-mono text-primary">{obj.id}</CardTitle>
-                      <Badge className={getClassColor(obj.class)}>
-                        {obj.class}
-                      </Badge>
-                    </div>
-                    <CardDescription className="text-base font-semibold text-foreground">
-                      {obj.title}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground mb-4">{obj.description}</p>
-                    <div className="flex items-center gap-2">
-                      <Icon 
-                        name="AlertCircle" 
-                        size={16} 
-                        className={
-                          obj.threat === 'critical' ? 'text-red-500' :
-                          obj.threat === 'high' ? 'text-orange-500' :
-                          obj.threat === 'medium' ? 'text-yellow-500' :
-                          'text-green-500'
-                        } 
-                      />
-                      <span className="text-xs text-muted-foreground uppercase tracking-wide">
-                        Threat Level: {obj.threat}
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
+                <Link key={obj.id} to={`/scp/${obj.id}`}>
+                  <Card 
+                    className="bg-card border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 cursor-pointer h-full"
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <CardHeader>
+                      <div className="flex items-start justify-between mb-2">
+                        <CardTitle className="text-lg font-mono text-primary">{obj.id}</CardTitle>
+                        <Badge className={getClassColor(obj.class)}>
+                          {obj.class}
+                        </Badge>
+                      </div>
+                      <CardDescription className="text-base font-semibold text-foreground">
+                        {obj.title}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground mb-4">{obj.description}</p>
+                      <div className="flex items-center gap-2">
+                        <Icon 
+                          name="AlertCircle" 
+                          size={16} 
+                          className={
+                            obj.threat === 'critical' ? 'text-red-500' :
+                            obj.threat === 'high' ? 'text-orange-500' :
+                            obj.threat === 'medium' ? 'text-yellow-500' :
+                            'text-green-500'
+                          } 
+                        />
+                        <span className="text-xs text-muted-foreground uppercase tracking-wide">
+                          Threat Level: {obj.threat}
+                        </span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
               ))}
             </div>
           </TabsContent>
